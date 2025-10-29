@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .status {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Portfolio Website Test</h1>
+        <div class="status">
+            <h2>Browser Compatibility Check</h2>
+            <p id="browser-info">Loading browser information...</p>
+            <p id="js-status">JavaScript: <span style="color: lightgreen;">✓ Working</span></p>
+        </div>
+        
+        <div class="status">
+            <h2>File Access Test</h2>
+            <p id="file-test">Testing file access...</p>
+        </div>
+        
+        <a href="index.html" class="btn">🎯 Open Main Portfolio</a>
+        <a href="http://localhost:8000" class="btn">🌐 Try Server Version</a>
+    </div>
+
+    <script>
+        // Browser info
+        const browserInfo = `
+            Browser: ${navigator.userAgent.split(' ').pop()}
+            Screen: ${screen.width}x${screen.height}
+            Viewport: ${window.innerWidth}x${window.innerHeight}
+        `;
+        document.getElementById('browser-info').innerText = browserInfo;
+
+        // Test file access
+        fetch('styles.css')
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('file-test').innerHTML = 
+                        '<span style="color: lightgreen;">✓ CSS file accessible</span>';
+                } else {
+                    document.getElementById('file-test').innerHTML = 
+                        '<span style="color: orange;">⚠ CSS file access issues</span>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('file-test').innerHTML = 
+                    '<span style="color: red;">✗ Cannot access CSS file - try server version</span>';
+            });
+    </script>
+</body>
+</html>

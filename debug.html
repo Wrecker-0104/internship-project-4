@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .error { color: red; }
+        .success { color: green; }
+        .warning { color: orange; }
+        
+        /* Basic portfolio styles for testing */
+        .navbar {
+            background: #2563eb;
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        .hero {
+            margin-top: 80px;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .section { padding: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="debug-panel">
+        <h2>🔍 Portfolio Debug Panel</h2>
+        <div id="status-log">
+            <p>✓ HTML Structure loaded</p>
+            <p id="css-status">⏳ Testing CSS...</p>
+            <p id="js-status">⏳ Testing JavaScript...</p>
+            <p id="fonts-status">⏳ Testing Fonts...</p>
+            <p id="icons-status">⏳ Testing Icons...</p>
+        </div>
+    </div>
+
+    <!-- Simplified Portfolio Structure -->
+    <nav class="navbar">
+        <a href="#home">Tanishk Arora</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="home" class="hero">
+        <div>
+            <h1>Hi, I'm <span style="color: #fbbf24;">Tanishk Arora</span></h1>
+            <h2>C Developer & Problem Solver</h2>
+            <p>Dedicated and detail-oriented coder with a strong foundation in C Programming</p>
+            <button onclick="testFullPortfolio()" style="padding: 10px 20px; margin-top: 20px; background: white; border: none; border-radius: 5px; cursor: pointer;">
+                🚀 Load Full Portfolio
+            </button>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Quick Tests</h2>
+        <button onclick="window.open('index.html', '_blank')" style="padding: 10px 20px; margin: 5px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Open Original Portfolio
+        </button>
+        <button onclick="window.open('http://localhost:8000', '_blank')" style="padding: 10px 20px; margin: 5px; background: #10b981; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Try Server Version
+        </button>
+    </section>
+
+    <script>
+        // Error logging
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('JavaScript Error:', msg, 'at', url, lineNo);
+            document.getElementById('status-log').innerHTML += 
+                `<p class="error">❌ JS Error: ${msg}</p>`;
+            return false;
+        };
+
+        // Test CSS loading
+        const testCSS = () => {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'styles.css';
+            link.onload = () => {
+                document.getElementById('css-status').innerHTML = 
+                    '<span class="success">✓ CSS loaded successfully</span>';
+            };
+            link.onerror = () => {
+                document.getElementById('css-status').innerHTML = 
+                    '<span class="error">❌ CSS failed to load</span>';
+            };
+            document.head.appendChild(link);
+        };
+
+        // Test JavaScript
+        const testJS = () => {
+            const script = document.createElement('script');
+            script.src = 'script.js';
+            script.onload = () => {
+                document.getElementById('js-status').innerHTML = 
+                    '<span class="success">✓ JavaScript loaded successfully</span>';
+            };
+            script.onerror = () => {
+                document.getElementById('js-status').innerHTML = 
+                    '<span class="error">❌ JavaScript failed to load</span>';
+            };
+            document.head.appendChild(script);
+        };
+
+        // Test Google Fonts
+        const testFonts = () => {
+            const link = document.createElement('link');
+            link.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
+            link.rel = 'stylesheet';
+            link.onload = () => {
+                document.getElementById('fonts-status').innerHTML = 
+                    '<span class="success">✓ Google Fonts loaded</span>';
+            };
+            link.onerror = () => {
+                document.getElementById('fonts-status').innerHTML = 
+                    '<span class="warning">⚠ Google Fonts failed (check internet)</span>';
+            };
+            document.head.appendChild(link);
+        };
+
+        // Test Font Awesome
+        const testIcons = () => {
+            const link = document.createElement('link');
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+            link.rel = 'stylesheet';
+            link.onload = () => {
+                document.getElementById('icons-status').innerHTML = 
+                    '<span class="success">✓ Font Awesome loaded</span>';
+            };
+            link.onerror = () => {
+                document.getElementById('icons-status').innerHTML = 
+                    '<span class="warning">⚠ Font Awesome failed (check internet)</span>';
+            };
+            document.head.appendChild(link);
+        };
+
+        // Load full portfolio
+        const testFullPortfolio = () => {
+            window.location.href = 'index.html';
+        };
+
+        // Run tests
+        setTimeout(() => {
+            testCSS();
+            testJS();
+            testFonts();
+            testIcons();
+        }, 1000);
+    </script>
+</body>
+</html>

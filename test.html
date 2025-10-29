@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Portfolio Website Diagnostic Test</h1>
+    
+    <div class="test-section">
+        <h2>File Loading Tests</h2>
+        <div id="css-test">CSS Loading: <span id="css-status">Testing...</span></div>
+        <div id="js-test">JavaScript Loading: <span id="js-status">Testing...</span></div>
+        <div id="fonts-test">Google Fonts: <span id="fonts-status">Testing...</span></div>
+        <div id="fontawesome-test">Font Awesome: <span id="fontawesome-status">Testing...</span></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Portfolio Link Test</h2>
+        <a href="index.html" target="_blank">Open Portfolio Website</a>
+    </div>
+
+    <script>
+        // Test CSS loading
+        const testElement = document.createElement('div');
+        testElement.style.fontFamily = 'Poppins, sans-serif';
+        document.body.appendChild(testElement);
+        
+        const fontFamily = window.getComputedStyle(testElement).fontFamily;
+        if (fontFamily.includes('Poppins')) {
+            document.getElementById('fonts-status').innerHTML = '<span class="success">✓ Loaded</span>';
+        } else {
+            document.getElementById('fonts-status').innerHTML = '<span class="error">✗ Failed to load</span>';
+        }
+        
+        // Test Font Awesome
+        const faTest = document.createElement('i');
+        faTest.className = 'fas fa-home';
+        faTest.style.display = 'none';
+        document.body.appendChild(faTest);
+        
+        setTimeout(() => {
+            const faStyles = window.getComputedStyle(faTest);
+            if (faStyles.fontFamily && faStyles.fontFamily.includes('Font Awesome')) {
+                document.getElementById('fontawesome-status').innerHTML = '<span class="success">✓ Loaded</span>';
+            } else {
+                document.getElementById('fontawesome-status').innerHTML = '<span class="error">✗ Failed to load</span>';
+            }
+        }, 1000);
+        
+        // Test CSS
+        fetch('styles.css')
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('css-status').innerHTML = '<span class="success">✓ Loaded</span>';
+                } else {
+                    document.getElementById('css-status').innerHTML = '<span class="error">✗ Failed to load</span>';
+                }
+            })
+            .catch(() => {
+                document.getElementById('css-status').innerHTML = '<span class="error">✗ Failed to load</span>';
+            });
+        
+        // Test JS
+        fetch('script.js')
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('js-status').innerHTML = '<span class="success">✓ Loaded</span>';
+                } else {
+                    document.getElementById('js-status').innerHTML = '<span class="error">✗ Failed to load</span>';
+                }
+            })
+            .catch(() => {
+                document.getElementById('js-status').innerHTML = '<span class="error">✗ Failed to load</span>';
+            });
+    </script>
+</body>
+</html>
